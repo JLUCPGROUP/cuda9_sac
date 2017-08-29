@@ -162,10 +162,14 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cudasac.cuh" />
+    <ClInclude Include="HMBuilder.h" />
+    <ClInclude Include="HostModel.h" />
     <ClInclude Include="XBuilder.h" />
     <ClInclude Include="XModel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HMBuilder.cpp" />
+    <ClCompile Include="HostModel.cpp" />
     <ClCompile Include="XBuilder.cpp" />
     <ClCompile Include="XModel.cpp" />
   </ItemGroup>

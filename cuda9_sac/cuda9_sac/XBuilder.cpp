@@ -21,7 +21,10 @@ void XBuilder::GenerateModelFromXml(XModel * i_model) {
 	getFeature();
 	generateDomains();
 	generateVariables();
-	generateRelations();
+	if (model_->feature.rs_size > 0)
+		generateRelations();
+	if (model_->feature.ps_size > 0)
+		generatePredicates();
 	generateConstraints();
 }
 
@@ -52,6 +55,7 @@ void XBuilder::getFeature() {
 	model_->feature.ds_size = getDomsNum();
 	model_->feature.vs_size = getVarsNum();
 	model_->feature.rs_size = getRelsNum();
+	model_->feature.ps_size = getPresNum();
 	model_->feature.cs_size = getConsNum();
 }
 
@@ -98,9 +102,23 @@ int XBuilder::getVarsNum() {
 }
 
 int XBuilder::getRelsNum() {
-	DOMNode* relations_node = root_->getElementsByTagName(XMLString::transcode("relations"))->item(0);
-	int num_rels = XMLString::parseInt(relations_node->getAttributes()->getNamedItem(XMLString::transcode("nbRelations"))->getTextContent());
+	int num_rels = 0;
+	DOMNode* rels_node = root_->getElementsByTagName(XMLString::transcode("relations"))->item(0);
+
+	if (rels_node != nullptr)
+		num_rels = XMLString::parseInt(rels_node->getAttributes()->getNamedItem(XMLString::transcode("nbRelations"))->getTextContent());
+
 	return num_rels;
+}
+
+int XBuilder::getPresNum() {
+	int num_pres = 0;
+	DOMNode* pres_node = root_->getElementsByTagName(XMLString::transcode("predicates"))->item(0);
+
+	if (pres_node != nullptr)
+		num_pres = XMLString::parseInt(pres_node->getAttributes()->getNamedItem(XMLString::transcode("nbPredicates"))->getTextContent());
+
+	return num_pres;
 }
 
 int XBuilder::getConsNum() {
@@ -173,19 +191,43 @@ void XBuilder::generateRelations() {
 	}
 }
 
+void XBuilder::generatePredicates() {
+	DOMNode *node;
+	DOMNodeList* nodes = root_->getElementsByTagName(XMLString::transcode("predicate"));
+	model_->pres = new XPre*[model_->feature.ps_size];
+
+	for (size_t i = 0; i < model_->feature.ps_size; ++i) {
+		const int pre_id = i;
+		node = nodes->item(i);
+		char* paras_str = XMLString::transcode(node->getChildNodes()->item(1)->getFirstChild()->getNodeValue());
+		char* fn_str = XMLString::transcode(node->getChildNodes()->item(3)->getChildNodes()->item(1)->getFirstChild()->getNodeValue());
+		model_->pres[i] = new XPre(pre_id, paras_str, fn_str);
+		XMLString::release(&paras_str);
+		XMLString::release(&fn_str);
+	}
+}
+
 void XBuilder::generateConstraints() {
 	int rel_id;
 	DOMNode* node;
 	DOMNodeList* nodes = root_->getElementsByTagName(XMLString::transcode("constraint"));
 	model_->cons = new XCon*[model_->feature.cs_size];
-
+	RelType type;
 	for (int i = 0; i < model_->feature.cs_size; ++i) {
 		node = nodes->item(i);
+		type = node->hasChildNodes() ? INT : EXT;
 		int arity = XMLString::parseInt(node->getAttributes()->getNamedItem(XMLString::transcode("arity"))->getTextContent());
 		char *scope_str = XMLString::transcode(node->getAttributes()->getNamedItem(XMLString::transcode("scope"))->getTextContent());
 		char* rel_id_str = XMLString::transcode(node->getAttributes()->getNamedItem(XMLString::transcode("reference"))->getTextContent());
-		sscanf_s(rel_id_str, "R%d", &rel_id);
-		model_->cons[i] = new XCon(i, rel_id, arity, scope_str);
+		if (type == INT) {
+			sscanf_s(rel_id_str, "P%d", &rel_id);
+			char* pars_str = XMLString::transcode(node->getChildNodes()->item(1)->getFirstChild()->getNodeValue());
+			model_->cons[i] = new XINTCon(i, rel_id, arity, scope_str, pars_str);
+		}
+		else if (type == EXT) {
+			sscanf_s(rel_id_str, "R%d", &rel_id);
+			model_->cons[i] = new XCon(i, rel_id, arity, scope_str);
+		}
 		XMLString::release(&scope_str);
 		XMLString::release(&rel_id_str);
 	}

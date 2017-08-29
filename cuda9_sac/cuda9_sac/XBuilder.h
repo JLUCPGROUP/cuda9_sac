@@ -11,7 +11,6 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
-#include <map>
 #include <vector>
 #include "XModel.h"
 
@@ -42,26 +41,6 @@ enum DomType {
 	standard,
 	disperse
 };
-
-class DomMap {
-public:
-	int id;
-	std::map<int, int> m;
-	DomType dt = standard;
-
-	DomMap() {};
-	~DomMap() {};
-	void MakeMap(XDom* d) {
-		id = d->id;
-		for (int i = 0; i < d->size; i++) {
-			m[d->values[i]] = i;
-			if (d->values[i] != i) {
-				dt = disperse;
-			}
-		}
-	}
-};
-
 
 class XBuilder {
 public:
@@ -103,14 +82,16 @@ private:
 	int getDomsNum();
 	int getVarsNum();
 	int getRelsNum();
+	int getPresNum();
 	int getConsNum();
 	int getMaxArity();
 
 	void generateDomains();
 	void generateVariables();
 	void generateRelations();
+	void generatePredicates();
 	void generateConstraints();
-	void modifyTuple();
+	//void modifyTuple();
 };
 }
 

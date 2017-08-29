@@ -16,6 +16,9 @@
     <Filter Include="Cuda">
       <UniqueIdentifier>{86990239-a659-4ae4-af6b-a1ccd41b50e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HostModel">
+      <UniqueIdentifier>{2b6910fc-cdf7-4322-af9c-9cbf92834a0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="queens-4_ext.xml">
@@ -47,6 +50,10 @@
     <ClInclude Include="XModel.h">
       <Filter>XModel</Filter>
     </ClInclude>
+    <ClInclude Include="HostModel.h">
+      <Filter>HostModel</Filter>
+    </ClInclude>
+    <ClInclude Include="HMBuilder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XBuilder.cpp">
@@ -55,5 +62,12 @@
     <ClCompile Include="XModel.cpp">
       <Filter>XModel</Filter>
     </ClCompile>
+    <ClCompile Include="HostModel.cpp">
+      <Filter>HostModel</Filter>
+    </ClCompile>
+    <ClCompile Include="HMBuilder.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt" />
   </ItemGroup>
 </Project>
