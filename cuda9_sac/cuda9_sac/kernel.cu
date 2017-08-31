@@ -34,7 +34,7 @@ int main() {
 
 	//for (size_t i = 0; i < xmodel->feature.ps_size; i++) {
 	//	XPre* p = xmodel->pres[i];
-	//	printf("%d, num_p:%d\n", p->id, p->num_paras);
+	//	printf("%d, num_p:%d\n", p->id, p->num_paras);	
 	//	//for (size_t j = 0; j < p->num_paras; j++) {
 	//	//	printf("%d,", p->paras[j]);
 	//	//}

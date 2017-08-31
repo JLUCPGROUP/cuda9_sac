@@ -53,7 +53,6 @@
     <ClInclude Include="HostModel.h">
       <Filter>HostModel</Filter>
     </ClInclude>
-    <ClInclude Include="HMBuilder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XBuilder.cpp">
@@ -62,10 +61,6 @@
     <ClCompile Include="XModel.cpp">
       <Filter>XModel</Filter>
     </ClCompile>
-    <ClCompile Include="HostModel.cpp">
-      <Filter>HostModel</Filter>
-    </ClCompile>
-    <ClCompile Include="HMBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />
