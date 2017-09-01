@@ -85,8 +85,8 @@ void XRel::GenerateTuples(char *tuples_str_) {
 			tuples[i][j] = atoi(strtok_s(tuples_str_, " |", &tuples_str_));
 }
 
-XCon::XCon(const int id_, const int rel_id_, const int arity_, char * scope_str_)
-	:id(id_), rel_id(rel_id_), arity(arity_) {
+XCon::XCon(const int id_, const int rel_id_, const int arity_, const RelType type_, char * scope_str_)
+	:id(id_), rel_id(rel_id_), type(type_), arity(arity_) {
 	scope = new int[arity];
 
 	for (int i = 0; i < arity; ++i)
@@ -98,8 +98,8 @@ XCon::~XCon() {
 	scope = NULL;
 }
 
-XINTCon::XINTCon(const int id, const int rel_id, const int arity, char* scope_str, char* pars)
-	:XCon(id, rel_id, arity, scope_str) {
+XINTCon::XINTCon(const int id, const int rel_id, const int arity, const RelType type, char* scope_str, char* pars)
+	:XCon(id, rel_id, arity, type, scope_str) {
 
 	int pas[50];
 	std::string s = pars;

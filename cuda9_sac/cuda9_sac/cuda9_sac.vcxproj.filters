@@ -61,6 +61,9 @@
     <ClCompile Include="XModel.cpp">
       <Filter>XModel</Filter>
     </ClCompile>
+    <ClCompile Include="HostModel.cpp">
+      <Filter>HostModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />

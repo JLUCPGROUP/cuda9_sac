@@ -3,9 +3,10 @@
 #include <iostream>
 #include <string>
 #include "cudasac.cuh"
+#include "XBuilder.h"
+#include "HostModel.h"
 #undef DOMDocument
 
-#include "XBuilder.h"
 
 using namespace std;
 using namespace cudacp;
@@ -18,6 +19,10 @@ int main() {
 	XBuilder builder(bm_path, XRT_BM);
 	XModel* xmodel = new XModel();
 	builder.GenerateModelFromXml(xmodel);
+	HostModel* hmodel = new HostModel();
+	HostModelBuilder hbuilder(xmodel, hmodel);
+	hbuilder.ShowHostModel();
+
 	//float build_time = BuidBitModel32bit(xmodel);
 	//float exe_time = SACGPU();
 	//DelGPUModel();
@@ -44,7 +49,9 @@ int main() {
 	//	printf("\n");
 	//}
 
+	delete hmodel;
 	delete xmodel;
+	hmodel = NULL;
 	xmodel = NULL;
 	//printf("Build time = %f\n", build_time);
 	//printf("Execution time = %f\n", exe_time);

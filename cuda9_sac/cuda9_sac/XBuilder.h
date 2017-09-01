@@ -37,11 +37,6 @@ enum XmlReaderType {
 	XRT_BM				///<banchmark
 };
 
-enum DomType {
-	standard,
-	disperse
-};
-
 class XBuilder {
 public:
 

@@ -222,11 +222,11 @@ void XBuilder::generateConstraints() {
 		if (type == INT) {
 			sscanf_s(rel_id_str, "P%d", &rel_id);
 			char* pars_str = XMLString::transcode(node->getChildNodes()->item(1)->getFirstChild()->getNodeValue());
-			model_->cons[i] = new XINTCon(i, rel_id, arity, scope_str, pars_str);
+			model_->cons[i] = new XINTCon(i, rel_id, arity, type, scope_str, pars_str);
 		}
 		else if (type == EXT) {
 			sscanf_s(rel_id_str, "R%d", &rel_id);
-			model_->cons[i] = new XCon(i, rel_id, arity, scope_str);
+			model_->cons[i] = new XCon(i, rel_id, arity, type, scope_str);
 		}
 		XMLString::release(&scope_str);
 		XMLString::release(&rel_id_str);

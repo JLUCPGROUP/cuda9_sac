@@ -116,7 +116,7 @@ public:
 	int* scope;
 	RelType type;
 	XCon() {};
-	XCon(const int id, const int rel_id, const int arity, char* scope_str);
+	XCon(const int id, const int rel_id, const int arity, const RelType type, char* scope_str);
 	~XCon();
 };
 
@@ -125,7 +125,7 @@ public:
 	int num_paras;
 	int* paras;
 	XINTCon() {};
-	XINTCon(const int id, const int rel_id, const int arity, char* scope_str, char* pars);
+	XINTCon(const int id, const int rel_id, const int arity, const RelType type, char* scope_str, char* pars);
 	~XINTCon();
 	int GetParameters(const char* par_chr);
 	//void GenerateParameters(char* pars_chr, const int pars_len);
